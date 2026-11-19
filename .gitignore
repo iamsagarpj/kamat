@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+
+# Next.js build output
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+# Environment variables (keep .env.example committed)
+.env
+.env*.local
+.env.development
+.env.production
+
+# Netlify / Vercel local folders
+.netlify/
+.vercel/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Testing / coverage
+coverage/
+.nyc_output/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# Local working files (photo inbox, zips used to copy files around)
+*.zip
+photos-inbox/
