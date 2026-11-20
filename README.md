@@ -139,7 +139,7 @@ WhatsApp: set `contact.whatsapp` (digits only, with country code, e.g. `9198XXXX
 1. In Netlify: **Add new site → Import an existing project → GitHub →** pick `iamsagarpj/kamat`.
 2. Netlify reads `netlify.toml`: build command `npm run build`, publish folder `out`, Node 22.
 3. Under **Site configuration → Environment variables**, add:
-   - `NEXT_PUBLIC_SITE_URL` = your live domain, e.g. `https://www.kameshkamble.in` (no trailing slash)
+   - `NEXT_PUBLIC_SITE_URL` = only needed once you add your own domain, e.g. `https://www.kameshkamble.in` (no trailing slash). Without it the site uses the Netlify address automatically.
    - `NEXT_PUBLIC_WEB3FORMS_KEY` = your Web3Forms key (contact form)
 4. Deploy. Every push to `main` redeploys automatically.
 5. Add the custom domain under **Domain management**; HTTPS is automatic.

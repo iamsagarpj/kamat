@@ -5,7 +5,9 @@
  */
 
 export const site = {
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.kameshkamble.in').replace(/\/$/, ''), // TODO: confirm domain
+  // Live address, used for link previews, canonical URLs and the sitemap.
+  // Order: your own setting, then the address Netlify gives the build (URL), then the Netlify site.
+  url: (process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || 'https://kameshkamble.netlify.app').replace(/\/$/, ''),
   name: 'Kamesh Kamble',
   locale: 'en_IN',
   defaultDescription:
