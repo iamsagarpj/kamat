@@ -12,7 +12,7 @@ declare global {
  * Click-to-load official Instagram embed. Nothing loads from Instagram
  * until the visitor asks for it, which keeps the page fast and private.
  */
-export default function InstagramEmbed({ url, title }: { url: string; title: string }) {
+export default function InstagramEmbed({ url, title, loadLabel = 'Load Instagram post', openLabel = 'Open on Instagram' }: { url: string; title: string; loadLabel?: string; openLabel?: string }) {
   const [load, setLoad] = useState(false);
 
   useEffect(() => {
@@ -31,8 +31,8 @@ export default function InstagramEmbed({ url, title }: { url: string; title: str
         <div>
           <p className="font-serif text-2xl leading-snug">{title}</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <button type="button" onClick={() => setLoad(true)} className="btn-ink">Load Instagram post</button>
-            <a href={url} target="_blank" rel="noopener noreferrer" className="btn-ghost-dark">Open on Instagram <ArrowUpRight className="h-4 w-4" aria-hidden /></a>
+            <button type="button" onClick={() => setLoad(true)} className="btn-ink">{loadLabel}</button>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="btn-ghost-dark">{openLabel} <ArrowUpRight className="h-4 w-4" aria-hidden /></a>
           </div>
         </div>
       </div>

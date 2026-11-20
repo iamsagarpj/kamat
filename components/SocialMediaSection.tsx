@@ -1,7 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Instagram, Facebook } from './icons';
 import { social } from '@/content/site';
-import { liveActivities, formatDate } from '@/content/activities';
+import { getContent, type Lang } from '@/content/i18n';
 import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
 
@@ -9,18 +9,19 @@ import SectionHeading from './SectionHeading';
  * Social presence. Links to his real profiles plus a "recent updates" strip
  * built from verified posts. No scraping: content is curated in content/activities.ts.
  */
-export default function SocialMediaSection({ limit = 3 }: { limit?: number }) {
-  const recent = liveActivities.slice(0, limit);
+export default function SocialMediaSection({ limit = 3, lang = 'en' }: { limit?: number; lang?: Lang }) {
+  const { activities, formatDate, ui } = getContent(lang);
+  const recent = activities.slice(0, limit);
   const channels = [
-    { ...social.instagram, Icon: Instagram, blurb: 'Day-to-day public work, events and greetings, mostly in Marathi.' },
-    { ...social.facebook, Icon: Facebook, blurb: 'Reels, photographs and updates for the wider community.' },
+    { ...social.instagram, Icon: Instagram, blurb: ui.media.blurbs.instagram },
+    { ...social.facebook, Icon: Facebook, blurb: ui.media.blurbs.facebook },
   ];
   return (
     <section aria-labelledby="social-title" className="section bg-paper-200">
       <div className="container-site">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <SectionHeading eyebrow="On social media" title="Follow along, day by day" intro="I share my work, events and greetings here, mostly in Marathi." />
+            <SectionHeading eyebrow={ui.media.socialPill} title={ui.media.socialTitle} intro={ui.media.socialIntro} />
             <div className="mt-10 grid gap-4">
               {channels.map(({ Icon, ...c }, i) => (
                 <Reveal key={c.url} delay={i * 0.08}>
@@ -38,7 +39,7 @@ export default function SocialMediaSection({ limit = 3 }: { limit?: number }) {
             </div>
           </div>
           <div className="lg:col-span-7">
-            <p className="eyebrow text-bronze-deep">Recent updates</p>
+            <p className="eyebrow text-bronze-deep">{ui.media.recent}</p>
             <ul className="mt-6 divide-y divide-ink/10 border-y border-ink/10">
               {recent.map((a, i) => (
                 <Reveal as="li" key={a.sourceUrl} delay={i * 0.08}>
@@ -46,7 +47,7 @@ export default function SocialMediaSection({ limit = 3 }: { limit?: number }) {
                     <time dateTime={a.date} className="text-sm text-stone">{formatDate(a.date)}</time>
                     <span>
                       <span className="block font-serif text-xl transition-colors group-hover:text-bronze-deep">{a.title}</span>
-                      <span className="mt-1 block text-sm text-stone">{a.theme}{a.place ? ` · ${a.place}` : ''}</span>
+                      <span className="mt-1 block text-sm text-stone">{ui.themes[a.theme] ?? a.theme}{a.place ? ` · ${a.place}` : ''}</span>
                     </span>
                     <span className="hidden text-sm font-semibold text-bronze-deep sm:inline">Instagram ↗</span>
                   </a>

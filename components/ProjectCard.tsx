@@ -3,9 +3,9 @@ import { MapPin } from 'lucide-react';
 import type { Project } from '@/content/types';
 import PhotoSlot from './PhotoSlot';
 
-export default function ProjectCard({ project, large = false }: { project: Project; large?: boolean }) {
+export default function ProjectCard({ project, large = false, base = '' }: { project: Project; large?: boolean; base?: string }) {
   return (
-    <Link href={`/projects/${project.slug}/`} className="group relative block overflow-hidden bg-ink text-paper">
+    <Link href={`${base}/projects/${project.slug}/`} className="group relative block overflow-hidden bg-ink text-paper">
       <PhotoSlot photo={project.cover} zoom className={`w-full ${large ? 'aspect-[4/5] md:aspect-[16/11]' : 'aspect-[4/5]'}`} />
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" aria-hidden />
       <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">

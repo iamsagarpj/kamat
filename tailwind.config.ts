@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './content/**/*.ts'],
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './views/**/*.{ts,tsx}', './content/**/*.ts'],
   theme: {
     extend: {
       colors: {
@@ -13,12 +13,12 @@ const config: Config = {
       },
       fontFamily: {
         serif: ['"Fraunces Variable"', '"Tiro Devanagari Marathi"', 'Georgia', 'serif'],
-        sans: ['"Manrope Variable"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        marathi: ['"Tiro Devanagari Marathi"', 'serif'],
+        sans: ['"Manrope Variable"', 'Mukta', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        marathi: ['"Tiro Devanagari Marathi"', 'Mukta', 'serif'],
       },
       fontSize: {
         // Capped by viewport height too, so the hero fits short laptop screens
-        mega: ['min(clamp(3.2rem, 0.6rem + 11.5vw, 11.5rem), 18svh)', { lineHeight: '0.88', letterSpacing: '-0.045em' }],
+        mega: ['min(clamp(3.2rem, 0.6rem + 11.5vw, 11.5rem), 16.5svh)', { lineHeight: '0.88', letterSpacing: '-0.045em' }],
         display: ['clamp(2.3rem, 1.3rem + 5.2vw, 6rem)', { lineHeight: '1.02', letterSpacing: '-0.03em' }],
         statement: ['clamp(1.6rem, 1rem + 3vw, 3.9rem)', { lineHeight: '1.12', letterSpacing: '-0.02em' }],
         h1: ['clamp(2rem, 1.4rem + 3vw, 4rem)', { lineHeight: '1.06', letterSpacing: '-0.015em' }],

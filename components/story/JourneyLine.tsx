@@ -2,11 +2,12 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useSpring, useReducedMotion } from 'framer-motion';
-import { milestones } from '@/content/site';
+import { getContent, type Lang } from '@/content/i18n';
 import Reveal from '../Reveal';
 
 /** Milestones on a line that draws itself as you scroll. Vertical on mobile, horizontal on desktop. */
-export default function JourneyLine({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
+export default function JourneyLine({ tone = 'light', lang = 'en' }: { tone?: 'light' | 'dark'; lang?: Lang }) {
+  const { milestones } = getContent(lang);
   const ref = useRef<HTMLOListElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 85%', 'end 55%'] });

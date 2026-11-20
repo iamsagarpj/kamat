@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent, useSpring, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { focusAreas } from '@/content/site';
+import { getContent, type Lang } from '@/content/i18n';
 import PhotoSlot from '../PhotoSlot';
 import Pill from '../Pill';
 
@@ -16,7 +16,8 @@ const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : use
  * numbered cards sideways (inspired by the reference site's "Main Attention").
  * On phones, with reduced motion, or without JS it is a native swipeable row.
  */
-export default function FocusScroll() {
+export default function FocusScroll({ lang = 'en' }: { lang?: Lang }) {
+  const { focusAreas, ui, num } = getContent(lang);
   const outer = useRef<HTMLElement>(null);
   const track = useRef<HTMLUListElement>(null);
   const reduce = useReducedMotion();
@@ -59,15 +60,15 @@ export default function FocusScroll() {
       <div className={pinned ? 'sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden pt-16' : 'section overflow-hidden'}>
         <div className="container-site flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <Pill>Chapter 03 · Focus</Pill>
+            <Pill>{ui.home.ch3}</Pill>
             <h2 id="focus-title" className="mt-5 text-h2">
-              Where my <span className="italic text-bronze-deep">attention</span> goes
+              {ui.home.focusTitle[0]} <span className="italic text-bronze-deep">{ui.home.focusTitle[1]}</span> {ui.home.focusTitle[2]}
             </h2>
           </div>
           <div className={`${pinned ? 'flex' : 'hidden'} w-full items-center gap-4 md:w-72`} aria-hidden>
             <span className="font-serif text-2xl tabular-nums">
-              {String(active + 1).padStart(2, '0')}
-              <span className="text-stone-light"> / {String(focusAreas.length).padStart(2, '0')}</span>
+              {num(String(active + 1).padStart(2, '0'))}
+              <span className="text-stone-light"> / {num(String(focusAreas.length).padStart(2, '0'))}</span>
             </span>
             <span className="relative h-px flex-1 bg-ink/15">
               <motion.span className="absolute inset-y-0 left-0 bg-bronze" style={{ width: pinned ? bar : '100%' }} />
@@ -81,7 +82,7 @@ export default function FocusScroll() {
           className={`mt-6 flex gap-5 lg:mt-10 px-5 sm:px-8 md:gap-7 lg:px-[max(3rem,calc((100vw-1280px)/2+3rem))] ${
             pinned ? 'w-max pr-[12vw]' : 'snap-x snap-mandatory overflow-x-auto pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
           }`}
-          aria-label="Focus areas"
+          aria-label={ui.publicLife.focusAria}
           tabIndex={pinned ? undefined : 0}
         >
           {focusAreas.map((f, i) => {
@@ -92,7 +93,7 @@ export default function FocusScroll() {
                   <PhotoSlot photo={f.photo} tone={i % 2 ? 'dark' : 'light'} zoom className="aspect-[1.05/1] w-full" sizes="440px" />
                 </div>
                 <div className="flex items-center gap-4 border-t border-ink/10 px-5 py-4 mt-3">
-                  <span className="flex h-8 min-w-8 items-center justify-center bg-paper-200 px-2 text-xs font-semibold tabular-nums text-bronze-deep">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="flex h-8 min-w-8 items-center justify-center bg-paper-200 px-2 text-xs font-semibold tabular-nums text-bronze-deep">{num(String(i + 1).padStart(2, '0'))}</span>
                   <h3 className="flex-1 font-serif text-[1.45rem] leading-tight">{f.title}</h3>
                   <ArrowUpRight className="h-5 w-5 shrink-0 text-ink/30 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-bronze-deep" aria-hidden />
                 </div>
@@ -110,7 +111,7 @@ export default function FocusScroll() {
             );
           })}
         </motion.ul>
-        {!pinned && <p className="container-site mt-2 text-xs uppercase tracking-widest text-stone md:hidden">Swipe to see more →</p>}
+        {!pinned && <p className="container-site mt-2 text-xs uppercase tracking-widest text-stone md:hidden">{ui.home.swipe}</p>}
       </div>
     </section>
   );

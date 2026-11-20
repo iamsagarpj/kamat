@@ -4,10 +4,12 @@
 
 @layer base {
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-  /* Scale the whole design up on large monitors (rem-based), so 2K/4K screens don't look empty */
-  @media (min-width: 1800px) { html { font-size: 112.5%; } }
-  @media (min-width: 2300px) { html { font-size: 125%; } }
-  @media (min-width: 3000px) { html { font-size: 150%; } }
+  /* Scale the whole design up only on screens that are both wide AND tall (2K/4K monitors).
+     A wide but short browser window (e.g. 1920x1080 with toolbars) keeps the normal size,
+     otherwise the first screen no longer fits. */
+  @media (min-width: 1800px) and (min-height: 1000px) { html { font-size: 112.5%; } }
+  @media (min-width: 2300px) and (min-height: 1250px) { html { font-size: 125%; } }
+  @media (min-width: 3000px) and (min-height: 1700px) { html { font-size: 150%; } }
   body { @apply bg-paper text-ink font-sans antialiased; overflow-x: clip; }
   /* Grid children may shrink below their content width (prevents mobile overflow). */
   .grid > * { min-width: 0; }
@@ -21,6 +23,11 @@
 
 @layer components {
   .container-site { @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-12; }
+  /* Wider layout on big monitors so there are no large empty bands left and right */
+  @media (min-width: 1600px) { .container-site { max-width: 1520px; padding-left: 3.5rem; padding-right: 3.5rem; } }
+  @media (min-width: 1800px) { .container-site { max-width: 1720px; padding-left: 4rem; padding-right: 4rem; } }
+  @media (min-width: 2300px) { .container-site { max-width: 2160px; } }
+  @media (min-width: 3000px) { .container-site { max-width: 2880px; } }
   .section { @apply py-16 sm:py-24 lg:py-32 2xl:py-36; }
   .eyebrow { @apply text-[0.75rem] font-semibold uppercase tracking-eyebrow; }
   .rule { @apply inline-block h-px w-10 bg-bronze align-middle; }
@@ -90,3 +97,48 @@
     .rise, .settle, .letter, .page-enter, .marquee, .float-slow, .spin-slow, .scroll-cue { animation: none; }
   }
 }
+
+/*
+ * Marathi (Devanagari) typography. Devanagari has marks above and below the line
+ * (shirorekha, matras), so it needs more line height, no letter-spacing (spacing breaks
+ * the joined headline) and no fake italics.
+ */
+@layer utilities {
+  .lang-mr { font-family: Mukta, "Manrope Variable", system-ui, sans-serif; }
+  .lang-mr p, .lang-mr li, .lang-mr dd { line-height: 1.75; }
+  .lang-mr h1, .lang-mr h2, .lang-mr h3, .lang-mr .font-serif { font-family: "Tiro Devanagari Marathi", "Fraunces Variable", serif; }
+  .lang-mr .italic, .lang-mr em { font-style: normal; }
+  .lang-mr .eyebrow, .lang-mr [class*="tracking-"], .lang-mr .uppercase { letter-spacing: 0 !important; text-transform: none; }
+  .lang-mr .eyebrow { font-size: 0.9rem; font-weight: 600; }
+  .lang-mr .text-mega { font-size: min(clamp(2.8rem, 0.4rem + 9vw, 8.5rem), 12svh); line-height: 1.15; letter-spacing: 0; }
+  .lang-mr .text-display { line-height: 1.25; letter-spacing: 0; }
+  .lang-mr .text-statement { line-height: 1.45; letter-spacing: 0; }
+  .lang-mr .text-h1, .lang-mr .text-h2 { line-height: 1.3; letter-spacing: 0; }
+  .lang-mr .text-h3 { line-height: 1.4; }
+  .lang-mr .text-lead { line-height: 1.8; }
+  /* word masks: room for marks above and below so nothing gets clipped */
+  .lang-mr .split .w { padding-top: 0.18em; padding-bottom: 0.22em; margin-top: -0.18em; margin-bottom: -0.22em; }
+  .lang-mr .btn { font-size: 0.95rem; }
+  .lang-mr .odo { line-height: 1.1; }
+}
+
+/*
+ * Desktop hero (1024px+): everything sizes from the window HEIGHT as well as the width,
+ * so the whole first screen (name, text, buttons, photo and the 2023 card) fits in any
+ * laptop or monitor window, from 1280x650 up to 4K.
+ */
+@media (min-width: 1024px) {
+  .hero-grid { min-height: 100svh !important; padding-top: max(5.25rem, 10.5svh) !important; padding-bottom: max(2.25rem, 5svh) !important; row-gap: 2svh !important; }
+  .hero-greet { margin-top: 1.4svh !important; font-size: clamp(1.25rem, 3.4svh, 2.4rem) !important; }
+  .hero-roles { font-size: clamp(1.05rem, 2.9svh, 1.75rem) !important; }
+  .hero-line { margin-top: 1.4svh !important; font-size: clamp(0.98rem, 2.1svh, 1.3rem) !important; line-height: 1.6 !important; }
+  .lang-mr .hero-line { line-height: 1.7 !important; }
+  .hero-ctas { margin-top: 2.8svh !important; }
+  .hero-loc { margin-top: 2.2svh !important; }
+  .hero-portrait { max-width: min(100%, calc((100svh - 11.5rem) * 0.8)) !important; }
+  .hero-card { padding: clamp(0.9rem, 2.2svh, 1.5rem) !important; width: clamp(11rem, 26svh, 14rem) !important; }
+  .hero-card .hero-card-num { font-size: clamp(2.1rem, 6svh, 3.75rem) !important; }
+  .hero-badge { width: clamp(6.5rem, 17svh, 10rem) !important; height: clamp(6.5rem, 17svh, 10rem) !important; }
+}
+/* Short desktop windows: drop the secondary location line rather than overflow */
+@media (min-width: 1024px) and (max-height: 820px) { .hero-loc { display: none !important; } }

@@ -3,9 +3,9 @@ import { ArrowUpRight } from 'lucide-react';
 import type { Business } from '@/content/types';
 import PhotoSlot from './PhotoSlot';
 
-export default function BusinessCard({ business, index = 0 }: { business: Business; index?: number }) {
+export default function BusinessCard({ business, index = 0, base = '' }: { business: Business; index?: number; base?: string }) {
   return (
-    <Link href={`/ventures/${business.slug}/`} className="group block h-full border border-ink/10 bg-paper transition-colors duration-500 hover:border-bronze">
+    <Link href={`${base}/ventures/${business.slug}/`} className="group block h-full border border-ink/10 bg-paper transition-colors duration-500 hover:border-bronze">
       <PhotoSlot photo={business.cover} tone="light" zoom className="aspect-[16/10] w-full" sizes="(min-width: 768px) 50vw, 100vw" />
       <div className="p-6 sm:p-8">
         <div className="flex items-start justify-between gap-4">

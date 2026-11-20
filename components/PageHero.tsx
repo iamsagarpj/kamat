@@ -3,6 +3,7 @@ import JsonLd from './JsonLd';
 import SplitText from './motion/SplitText';
 import Reveal from './Reveal';
 import { breadcrumbSchema } from '@/lib/seo';
+import { getContent, type Lang } from '@/content/i18n';
 
 /** Personal, editorial page header: oversized title with word reveal, breadcrumbs, optional Marathi line. */
 export default function PageHero({
@@ -12,6 +13,7 @@ export default function PageHero({
   intro,
   marathi,
   crumbs,
+  lang = 'en',
 }: {
   eyebrow: string;
   title: string;
@@ -20,8 +22,10 @@ export default function PageHero({
   intro?: string;
   marathi?: string;
   crumbs: { name: string; path: string }[];
+  lang?: Lang;
 }) {
-  const all = [{ name: 'Home', path: '/' }, ...crumbs];
+  const { ui, href } = getContent(lang);
+  const all = [{ name: ui.homeLabel, path: href('/') }, ...crumbs.map((cr) => ({ ...cr, path: href(cr.path) }))];
   const full = accent ? `${title} ${accent}` : title;
   return (
     <section className="relative overflow-hidden bg-ink text-paper">

@@ -1,10 +1,11 @@
 import { ArrowUpRight, MapPin } from 'lucide-react';
 import type { Activity } from '@/content/types';
-import { formatDate } from '@/content/activities';
+import { getContent, type Lang } from '@/content/i18n';
 import Reveal from './Reveal';
 
 /** Vertical editorial timeline of verified public activities, each linked to its source post. */
-export default function ActivityTimeline({ items, tone = 'light' }: { items: Activity[]; tone?: 'light' | 'dark' }) {
+export default function ActivityTimeline({ items, tone = 'light', lang = 'en' }: { items: Activity[]; tone?: 'light' | 'dark'; lang?: Lang }) {
+  const { formatDate, ui } = getContent(lang);
   const dark = tone === 'dark';
   return (
     <ol className={`relative border-l ${dark ? 'border-paper/15' : 'border-ink/15'} ml-1.5`}>
@@ -14,7 +15,7 @@ export default function ActivityTimeline({ items, tone = 'light' }: { items: Act
           <div className="grid gap-3 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-3">
               <time dateTime={a.date} className={`block font-serif text-lg ${dark ? 'text-bronze-light' : 'text-bronze-deep'}`}>{formatDate(a.date)}</time>
-              <p className={`eyebrow mt-1 ${dark ? 'text-paper/60' : 'text-stone'}`}>{a.theme}</p>
+              <p className={`eyebrow mt-1 ${dark ? 'text-paper/60' : 'text-stone'}`}>{ui.themes[a.theme] ?? a.theme}</p>
             </div>
             <div className="md:col-span-9">
               <h3 className={`text-h3 ${dark ? 'text-paper' : ''}`}>{a.title}</h3>
@@ -25,7 +26,7 @@ export default function ActivityTimeline({ items, tone = 'light' }: { items: Act
               )}
               <p className={`mt-3 max-w-2xl leading-relaxed ${dark ? 'text-paper/75' : 'text-stone'}`}>{a.summary}</p>
               <a href={a.sourceUrl} target="_blank" rel="noopener noreferrer" className={`link-underline mt-4 text-sm ${dark ? 'text-bronze-light' : 'text-bronze-deep'}`}>
-                View original post <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                {ui.events.viewOriginal} <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
               </a>
             </div>
           </div>

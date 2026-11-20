@@ -10,7 +10,7 @@ import SplitText from '../motion/SplitText';
  * Full-bleed cinematic band: a large photo that zooms gently as it passes,
  * with a line of text over it. Swap in a video later if one is available.
  */
-export default function ImageBand({ photo, line, sub }: { photo: Photo; line: string; sub?: string }) {
+export default function ImageBand({ photo, line, sub, emphasis = ['people', 'Khed'] }: { photo: Photo; line: string; sub?: string; emphasis?: string[] }) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
@@ -23,7 +23,7 @@ export default function ImageBand({ photo, line, sub }: { photo: Photo; line: st
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-ink/20" aria-hidden />
       <div className="container-site relative flex h-full flex-col justify-end pb-14 sm:pb-20">
-        <SplitText as="p" text={line} tone="dark" emphasis={['people', 'Khed']} className="max-w-4xl font-serif text-display" />
+        <SplitText as="p" text={line} tone="dark" emphasis={emphasis} className="max-w-4xl font-serif text-display" />
         {sub && <p lang="mr" className="mt-6 font-marathi text-2xl text-bronze-light">{sub}</p>}
       </div>
     </section>

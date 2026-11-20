@@ -1,20 +1,25 @@
 import type { Metadata } from 'next';
 import { site, profile, social } from '@/content/site';
 import type { Business } from '@/content/types';
+import { localePath, type Lang } from '@/content/i18n';
 
-export function pageMeta(opts: { title: string; description: string; path: string; image?: string }): Metadata {
-  const url = `${site.url}${opts.path}`;
+export function pageMeta(opts: { title: string; description: string; path: string; image?: string; lang?: Lang }): Metadata {
+  const lang = opts.lang ?? 'en';
+  const url = `${site.url}${localePath(lang, opts.path)}`;
+  const en = `${site.url}${localePath('en', opts.path)}`;
+  const mr = `${site.url}${localePath('mr', opts.path)}`;
   const image = opts.image ? `${site.url}${opts.image}` : `${site.url}/og-image.png`;
   return {
     title: opts.title,
     description: opts.description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: { 'en-IN': en, 'mr-IN': mr, 'x-default': en } },
     openGraph: {
       title: opts.title,
       description: opts.description,
       url,
-      siteName: site.name,
-      locale: site.locale,
+      siteName: lang === 'mr' ? 'कामेश कांबळे' : site.name,
+      locale: lang === 'mr' ? 'mr_IN' : site.locale,
+      alternateLocale: lang === 'mr' ? [site.locale] : ['mr_IN'],
       type: 'website',
       images: [{ url: image, width: 1200, height: 630, alt: opts.title }],
     },
@@ -43,7 +48,7 @@ export const websiteSchema = () => ({
   '@id': `${site.url}/#website`,
   url: site.url,
   name: site.name,
-  inLanguage: 'en-IN',
+  inLanguage: ['en-IN', 'mr-IN'],
   publisher: { '@id': `${site.url}/#person` },
 });
 

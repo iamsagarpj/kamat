@@ -28,6 +28,24 @@ Motion (all in `components/motion/` and `globals.css`):
 
 Everything is progressive enhancement: content is in the HTML without JavaScript, and `prefers-reduced-motion` switches all motion off.
 
+## English and Marathi (मराठी)
+
+The site is fully bilingual. English is at the normal addresses (`/about/`), Marathi under `/mr/` (`/mr/about/`). The **मराठी / English** button in the header switches to the same page in the other language.
+
+| What | Where |
+|---|---|
+| Buttons, menus, headings, form messages | `content/ui-en.ts` and `content/ui-mr.ts` (same shape, side by side) |
+| His story, roles, focus areas, values, milestones, activities, business and gallery text in Marathi | `content/mr.ts` |
+| English story content | `content/site.ts`, `content/activities.ts`, `content/businesses.ts`, `content/gallery.ts` |
+| Page layouts (shared by both languages) | `views/*View.tsx` |
+| Routes | `app/(en)/…` (English) and `app/mr/…` (Marathi), each a two-line file |
+
+Marathi is written in his own voice, in everyday Khed-Satara Marathi rather than formal translation. **Have Kamesh sir or someone from his team read it once before launch.**
+
+Details handled for Marathi: Devanagari fonts (Tiro Devanagari Marathi for headings, Mukta for text), extra line height so matras are never clipped, no letter-spacing or fake italics on Devanagari, Devanagari numerals (२०२३) and Marathi dates (१६ नोव्हेंबर २०२६), `lang="mr"` on every Marathi page, and `hreflang` links plus both languages in `sitemap.xml` so Google shows the right version to Marathi searchers.
+
+When you add a new activity or gallery photo, add its Marathi text in `content/mr.ts` too (activities are matched by the post URL, gallery items by order). If you forget, the English text shows on the Marathi page instead of breaking.
+
 ## Brand: logo and favicon
 
 The **KK monogram** pairs an upright K and an italic K (echoing "Kamesh" / "Kamble." in the hero) inside the arch used for his portrait, with a four-point star at the top. Letters are real outlines from the site's Fraunces typeface, so files need no fonts.
@@ -49,7 +67,7 @@ Brand colours: charcoal `#16120E`, cream `#F6F1E9`, bronze `#C08A4A`, light bron
 
 | Route | Purpose |
 |---|---|
-| `/` | Home, told in chapters: hero, who I am, three roles, in the community, the road so far + what I believe, moments, let's talk |
+| `/` and `/mr/` | Home, told in chapters: hero, who I am, three roles, in the community, the road so far + what I believe, moments, let's talk |
 | `/about/` | My Story: three first-person chapters, motto, beliefs, milestones |
 | `/ventures/` and `/ventures/[slug]/` | All businesses; one detail page per business (overview, services, ongoing/completed projects, enquiry) |
 | `/projects/` and `/projects/[slug]/` | Project portfolio and detail pages (honest empty state until projects are verified) |

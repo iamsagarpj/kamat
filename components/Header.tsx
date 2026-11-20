@@ -5,12 +5,17 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
-import { nav, profile, social } from '@/content/site';
+import { profile, social } from '@/content/site';
+import { getContent, localePath, type Lang } from '@/content/i18n';
 import Magnetic from './motion/Magnetic';
 import LogoMark from './brand/LogoMark';
 
-export default function Header() {
-  const pathname = usePathname();
+export default function Header({ lang = 'en' }: { lang?: Lang }) {
+  const pathname = usePathname() || '/';
+  const c = getContent(lang);
+  const { nav, ui } = c;
+  const other: Lang = lang === 'mr' ? 'en' : 'mr';
+  const switchHref = localePath(other, pathname);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
@@ -44,15 +49,15 @@ export default function Header() {
       }`}
     >
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:bg-paper focus:px-4 focus:py-2 focus:text-ink">
-        Skip to content
+        {ui.skip}
       </a>
       <div className="container-site flex items-center justify-between gap-6">
-        <Link href="/" className="group flex min-h-[44px] items-center gap-3 text-paper" aria-label={`${profile.name}, home`}>
+        <Link href={c.href('/')} className="group flex min-h-[44px] items-center gap-3 text-paper" aria-label={`${profile.name}, ${ui.homeLabel}`}>
           <LogoMark className="h-11 w-11 shrink-0 transition-transform duration-500 group-hover:-translate-y-0.5 sm:h-12 sm:w-12" title="" />
-          <span className="font-serif text-[1.35rem] italic leading-none tracking-tight transition-colors group-hover:text-bronze-light sm:text-2xl">
-            Kamesh Kamble
+          <span className="whitespace-nowrap font-serif text-[1.35rem] italic leading-none tracking-tight transition-colors group-hover:text-bronze-light max-[379px]:hidden sm:text-2xl">
+            {lang === 'mr' ? 'कामेश कांबळे' : 'Kamesh Kamble'}
           </span>
-          <span lang="mr" className="hidden font-marathi text-sm text-bronze-light/80 sm:inline">{profile.shortMarathi}</span>
+          <span lang={lang === 'mr' ? 'en' : 'mr'} className={`hidden text-sm text-bronze-light/80 xl:inline ${lang === 'mr' ? 'font-serif italic' : 'font-marathi'}`}>{lang === 'mr' ? 'Kamesh Kamble' : profile.shortMarathi}</span>
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
@@ -74,16 +79,25 @@ export default function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <a
+            href={switchHref}
+            hrefLang={other === 'mr' ? 'mr' : 'en'}
+            lang={other === 'mr' ? 'mr' : 'en'}
+            title={ui.switchLabel}
+            className={`flex min-h-[44px] items-center rounded-full border border-paper/20 px-3.5 text-paper/85 transition-colors hover:border-bronze-light hover:text-bronze-light ${other === 'mr' ? 'font-marathi text-[0.95rem]' : 'text-sm font-semibold'}`}
+          >
+            {ui.switchTo}
+          </a>
           <Magnetic className="hidden sm:inline-flex">
-            <Link href="/contact/" className="btn-gold min-h-[44px]">
-              Let’s talk
+            <Link href={c.href('/contact/')} className="btn-gold min-h-[44px]">
+              {ui.letsTalk}
             </Link>
           </Magnetic>
           <button
             type="button"
             className="flex h-11 w-11 items-center justify-center text-paper lg:hidden"
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? ui.closeMenu : ui.openMenu}
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen((o) => !o)}
@@ -105,7 +119,7 @@ export default function Header() {
           >
             <nav aria-label="Mobile" className="container-site flex min-h-full flex-col pb-10 pt-6">
               <ul className="divide-y divide-paper/10 border-y border-paper/10">
-                {[{ href: '/', label: 'Home' }, ...nav, { href: '/contact/', label: 'Let’s talk' }].map((item, i) => (
+                {[{ href: c.href('/'), label: ui.homeLabel }, ...nav, { href: c.href('/contact/'), label: ui.letsTalk }].map((item, i) => (
                   <motion.li
                     key={item.href}
                     initial={reduce ? false : { opacity: 0, x: -16 }}
@@ -114,7 +128,7 @@ export default function Header() {
                   >
                     <Link
                       href={item.href}
-                      aria-current={(item.href === '/' ? pathname === '/' : isActive(item.href)) ? 'page' : undefined}
+                      aria-current={(item.href === c.href('/') ? pathname === c.href('/') : isActive(item.href)) ? 'page' : undefined}
                       className="flex items-center justify-between py-4 font-serif text-[1.75rem] text-paper"
                     >
                       {item.label}
@@ -125,6 +139,7 @@ export default function Header() {
               </ul>
               <div className="mt-auto pt-10 text-sm text-paper/60">
                 <p className="font-marathi text-lg text-bronze-light">{profile.shortMarathi}</p>
+                <a href={switchHref} lang={other} className="mt-4 inline-flex min-h-[44px] items-center rounded-full border border-paper/20 px-4 text-paper">{ui.switchLabel}</a>
                 <div className="mt-4 flex gap-6">
                   <a href={social.instagram.url} target="_blank" rel="noopener noreferrer" className="hover:text-paper">Instagram</a>
                   <a href={social.facebook.url} target="_blank" rel="noopener noreferrer" className="hover:text-paper">Facebook</a>

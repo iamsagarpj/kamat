@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X, Expand } from 'lucide-react';
 import type { GalleryItem } from '@/content/types';
 import PhotoSlot from './PhotoSlot';
+import { getContent, type Lang } from '@/content/i18n';
 
 const aspectClass = { portrait: 'aspect-[3/4]', landscape: 'aspect-[4/3]', square: 'aspect-square' } as const;
 
@@ -13,7 +14,8 @@ const aspectClass = { portrait: 'aspect-[3/4]', landscape: 'aspect-[4/3]', squar
  * (Esc to close, arrow keys to move, focus returns to the opener).
  * Reused for the main gallery and for project photo sets.
  */
-export default function ProjectGallery({ items, categories }: { items: GalleryItem[]; categories?: string[] }) {
+export default function ProjectGallery({ items, categories, lang = 'en' }: { items: GalleryItem[]; categories?: string[]; lang?: Lang }) {
+  const { ui, categoryLabel } = getContent(lang);
   const [filter, setFilter] = useState<string>('All');
   const [active, setActive] = useState<number | null>(null);
   const openerRef = useRef<HTMLButtonElement | null>(null);
@@ -49,7 +51,7 @@ export default function ProjectGallery({ items, categories }: { items: GalleryIt
   return (
     <div>
       {categories && (
-        <div role="group" aria-label="Filter gallery" className="-mx-5 mb-10 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:px-0">
+        <div role="group" aria-label={ui.gallery.filterAria} className="-mx-5 mb-10 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:px-0">
           {['All', ...categories].map((c) => (
             <button
               key={c}
@@ -60,7 +62,7 @@ export default function ProjectGallery({ items, categories }: { items: GalleryIt
                 filter === c ? 'border-ink bg-ink text-paper' : 'border-ink/15 text-ink/70 hover:border-ink/40 hover:text-ink'
               }`}
             >
-              {c}
+              {c === 'All' ? ui.gallery.all : categoryLabel(c)}
             </button>
           ))}
         </div>
@@ -76,14 +78,14 @@ export default function ProjectGallery({ items, categories }: { items: GalleryIt
                 openerRef.current = e.currentTarget;
                 setActive(i);
               }}
-              aria-label={`Open: ${item.alt}`}
+              aria-label={`${ui.gallery.open}: ${item.alt}`}
             >
               <PhotoSlot photo={item} tone={i % 3 === 1 ? 'dark' : 'light'} zoom className={`w-full ${aspectClass[item.aspect ?? 'landscape']}`} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
               <span className="pointer-events-none absolute right-3 top-3 flex h-9 w-9 items-center justify-center bg-ink/80 text-paper opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden>
                 <Expand className="h-4 w-4" />
               </span>
             </button>
-            <p className="mt-2 text-xs uppercase tracking-wider text-stone">{item.category}</p>
+            <p className="mt-2 text-xs uppercase tracking-wider text-stone">{categoryLabel(item.category)}</p>
           </li>
         ))}
       </ul>
@@ -102,7 +104,7 @@ export default function ProjectGallery({ items, categories }: { items: GalleryIt
           >
             <div className="flex items-center justify-between text-paper">
               <p className="text-sm text-paper/70">{(active ?? 0) + 1} / {shown.length}</p>
-              <button ref={closeRef} type="button" onClick={close} aria-label="Close" className="flex h-11 w-11 items-center justify-center hover:text-bronze-light">
+              <button ref={closeRef} type="button" onClick={close} aria-label={ui.gallery.close} className="flex h-11 w-11 items-center justify-center hover:text-bronze-light">
                 <X className="h-6 w-6" />
               </button>
             </div>
@@ -113,10 +115,10 @@ export default function ProjectGallery({ items, categories }: { items: GalleryIt
               </motion.div>
               {shown.length > 1 && (
                 <>
-                  <button type="button" onClick={() => step(-1)} aria-label="Previous photo" className="absolute left-0 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center bg-ink/70 text-paper hover:text-bronze-light">
+                  <button type="button" onClick={() => step(-1)} aria-label={ui.gallery.prev} className="absolute left-0 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center bg-ink/70 text-paper hover:text-bronze-light">
                     <ChevronLeft className="h-6 w-6" />
                   </button>
-                  <button type="button" onClick={() => step(1)} aria-label="Next photo" className="absolute right-0 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center bg-ink/70 text-paper hover:text-bronze-light">
+                  <button type="button" onClick={() => step(1)} aria-label={ui.gallery.next} className="absolute right-0 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center bg-ink/70 text-paper hover:text-bronze-light">
                     <ChevronRight className="h-6 w-6" />
                   </button>
                 </>
