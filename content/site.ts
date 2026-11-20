@@ -5,9 +5,9 @@
  */
 
 export const site = {
-  // Live address, used for link previews, canonical URLs and the sitemap.
-  // Order: your own setting, then the address Netlify gives the build (URL), then the Netlify site.
-  url: (process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || 'https://kameshkamble.netlify.app').replace(/\/$/, ''),
+  // Public address of the site. Worked out automatically for any host or domain in
+  // next.config.mjs (see the note there), so nothing here is tied to one domain.
+  url: (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, ''),
   name: 'Kamesh Kamble',
   locale: 'en_IN',
   defaultDescription:

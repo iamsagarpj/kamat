@@ -1,6 +1,7 @@
 # Netlify configuration: Kamesh Kamble website
 # The site is a static export (next.config.mjs: output: 'export'), so Netlify
-# just builds it and serves the `out` folder. No server functions are needed.
+# just builds it and serves the `out` folder. One small edge function
+# (netlify/edge-functions/site-origin.ts) makes link previews work on any domain.
 
 [build]
   command = "npm run build"
@@ -11,8 +12,9 @@
   NEXT_TELEMETRY_DISABLED = "1"
   # Static export: don't let Netlify's Next.js runtime plugin take over the build
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
-  # Set these two in Netlify > Site configuration > Environment variables:
-  #   NEXT_PUBLIC_SITE_URL       e.g. https://www.kameshkamble.in  (no trailing slash)
+  # The site address is detected automatically (see next.config.mjs). Optional settings in
+  # Netlify > Site configuration > Environment variables:
+  #   NEXT_PUBLIC_SITE_URL       only to force one address, no trailing slash
   #   NEXT_PUBLIC_WEB3FORMS_KEY  your Web3Forms access key (contact form)
 
 # Long-term caching for fingerprinted build assets and self-hosted fonts

@@ -116,7 +116,7 @@ WhatsApp: set `contact.whatsapp` (digits only, with country code, e.g. `9198XXXX
 ## SEO
 
 - Unique titles, descriptions and canonical URLs per page (`lib/seo.ts`).
-- Open Graph and Twitter card metadata, with `public/og-image.jpg` and `public/og-image-mr.jpg` (1200×630 JPG, under 300 KB). Set `NEXT_PUBLIC_SITE_URL` in Netlify to the live address, because the card image link must be a full, public URL.
+- Open Graph and Twitter card metadata, with `public/og-image.jpg` and `public/og-image-mr.jpg` (1200×630 JPG, under 300 KB). The card's image link is a full URL that always matches the domain the page is opened on, so it works on any domain.
 - `sitemap.xml` and `robots.txt` generated at build time from content (unpublished items are excluded).
 - JSON-LD: `Person`, `WebSite`, `Organization` (Vijaya Construction), and `BreadcrumbList` on every inner page. There's deliberately no `LocalBusiness`, address, rating or review markup until verified data exists.
 - Set `NEXT_PUBLIC_SITE_URL` to the real domain before the production build.
@@ -139,7 +139,7 @@ WhatsApp: set `contact.whatsapp` (digits only, with country code, e.g. `9198XXXX
 1. In Netlify: **Add new site → Import an existing project → GitHub →** pick `iamsagarpj/kamat`.
 2. Netlify reads `netlify.toml`: build command `npm run build`, publish folder `out`, Node 22.
 3. Under **Site configuration → Environment variables**, add:
-   - `NEXT_PUBLIC_SITE_URL` = only needed once you add your own domain, e.g. `https://www.kameshkamble.in` (no trailing slash). Without it the site uses the Netlify address automatically.
+   - `NEXT_PUBLIC_SITE_URL` is optional. The site address is detected automatically on Netlify, Vercel, Cloudflare Pages and Render (see `next.config.mjs`), and on Netlify the edge function `netlify/edge-functions/site-origin.ts` rewrites preview and canonical links to whatever domain the page is opened on. Set it only to force one address.
    - `NEXT_PUBLIC_WEB3FORMS_KEY` = your Web3Forms key (contact form)
 4. Deploy. Every push to `main` redeploys automatically.
 5. Add the custom domain under **Domain management**; HTTPS is automatic.
