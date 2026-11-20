@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Instagram, Facebook } from './icons';
+import LogoMark from './brand/LogoMark';
 import { nav, profile, social, contact } from '@/content/site';
 
 export default function Footer() {
@@ -10,7 +11,13 @@ export default function Footer() {
       <div className="container-site relative pt-20">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-6">
-            <p lang="mr" className="font-marathi text-2xl text-bronze-light">{profile.shortMarathi}</p>
+            <div className="flex items-center gap-5">
+              <LogoMark className="h-20 w-20 shrink-0 sm:h-24 sm:w-24" title="" />
+              <div>
+                <p className="font-serif text-2xl italic text-paper sm:text-3xl">{profile.name}</p>
+                <p lang="mr" className="mt-1 font-marathi text-xl text-bronze-light">{profile.shortMarathi}</p>
+              </div>
+            </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed">
               Zilla Parishad Member, Satara · Standing Committee member · Founder, Vijaya Construction. From {contact.region}.
             </p>

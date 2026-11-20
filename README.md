@@ -28,6 +28,23 @@ Motion (all in `components/motion/` and `globals.css`):
 
 Everything is progressive enhancement: content is in the HTML without JavaScript, and `prefers-reduced-motion` switches all motion off.
 
+## Brand: logo and favicon
+
+The **KK monogram** pairs an upright K and an italic K (echoing "Kamesh" / "Kamble." in the hero) inside the arch used for his portrait, with a four-point star at the top. Letters are real outlines from the site's Fraunces typeface, so files need no fonts.
+
+| File | Use |
+|---|---|
+| `public/favicon.ico`, `favicon.svg` | Browser tab icon (16px version simplified to a bold K) |
+| `public/apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `site.webmanifest` | Phone home-screen and app icons |
+| `public/og-image.png` | Link preview when the site is shared (WhatsApp, Facebook, X) |
+| `public/brand/kk-mark-*.svg/.png` | Monogram alone (dark, light, gold on transparent) |
+| `public/brand/kk-lockup-*.svg/.png` | Monogram + "Kamesh Kamble" + "आपला कामेश", horizontal (letterheads, banners, email signature) |
+| `public/brand/kk-stacked-*.svg/.png` | Stacked version (posters, print) |
+| `public/brand/kk-profile-picture-1080.png` | Square profile picture for Instagram / Facebook / WhatsApp |
+| `components/brand/LogoMark.tsx` | The monogram as a React component (header, footer) |
+
+Brand colours: charcoal `#16120E`, cream `#F6F1E9`, bronze `#C08A4A`, light bronze `#E0B87F`.
+
 ## Pages
 
 | Route | Purpose |

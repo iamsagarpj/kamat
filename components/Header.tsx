@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { nav, profile, social } from '@/content/site';
 import Magnetic from './motion/Magnetic';
+import LogoMark from './brand/LogoMark';
 
 export default function Header() {
   const pathname = usePathname();
@@ -47,6 +48,7 @@ export default function Header() {
       </a>
       <div className="container-site flex items-center justify-between gap-6">
         <Link href="/" className="group flex min-h-[44px] items-center gap-3 text-paper" aria-label={`${profile.name}, home`}>
+          <LogoMark className="h-11 w-11 shrink-0 transition-transform duration-500 group-hover:-translate-y-0.5 sm:h-12 sm:w-12" title="" />
           <span className="font-serif text-[1.35rem] italic leading-none tracking-tight transition-colors group-hover:text-bronze-light sm:text-2xl">
             Kamesh Kamble
           </span>

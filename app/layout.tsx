@@ -20,7 +20,15 @@ export const metadata: Metadata = {
   description: site.defaultDescription,
   applicationName: site.name,
   authors: [{ name: site.name }],
-  icons: { icon: '/favicon.svg' },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
+  manifest: '/site.webmanifest',
   formatDetection: { telephone: false },
 };
 
