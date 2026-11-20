@@ -8,7 +8,9 @@ export function pageMeta(opts: { title: string; description: string; path: strin
   const url = `${site.url}${localePath(lang, opts.path)}`;
   const en = `${site.url}${localePath('en', opts.path)}`;
   const mr = `${site.url}${localePath('mr', opts.path)}`;
-  const image = opts.image ? `${site.url}${opts.image}` : `${site.url}/og-image.png`;
+  // Link preview card (WhatsApp, Facebook, Telegram, X, LinkedIn). 1200x630 JPG, under 300 KB so WhatsApp shows the large card.
+  const image = opts.image ? `${site.url}${opts.image}` : `${site.url}${lang === 'mr' ? '/og-image-mr.jpg' : '/og-image.jpg'}`;
+  const imageAlt = lang === 'mr' ? 'कामेश कांबळे, खेड, सातारा' : 'Kamesh Kamble, Khed, Satara';
   return {
     title: opts.title,
     description: opts.description,
@@ -21,9 +23,9 @@ export function pageMeta(opts: { title: string; description: string; path: strin
       locale: lang === 'mr' ? 'mr_IN' : site.locale,
       alternateLocale: lang === 'mr' ? [site.locale] : ['mr_IN'],
       type: 'website',
-      images: [{ url: image, width: 1200, height: 630, alt: opts.title }],
+      images: [{ url: image, secureUrl: image, type: 'image/jpeg', width: 1200, height: 630, alt: imageAlt }],
     },
-    twitter: { card: 'summary_large_image', title: opts.title, description: opts.description, images: [image] },
+    twitter: { card: 'summary_large_image', title: opts.title, description: opts.description, images: [{ url: image, alt: imageAlt }] },
   };
 }
 

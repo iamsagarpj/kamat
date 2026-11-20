@@ -54,7 +54,7 @@ The **KK monogram** pairs an upright K and an italic K (echoing "Kamesh" / "Kamb
 |---|---|
 | `public/favicon.ico`, `favicon.svg` | Browser tab icon (16px version simplified to a bold K) |
 | `public/apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `site.webmanifest` | Phone home-screen and app icons |
-| `public/og-image.png` | Link preview when the site is shared (WhatsApp, Facebook, X) |
+| `public/og-image.jpg`, `public/og-image-mr.jpg` | Link preview card when the site is shared (WhatsApp, Facebook, X). English and Marathi |
 | `public/brand/kk-mark-*.svg/.png` | Monogram alone (dark, light, gold on transparent) |
 | `public/brand/kk-lockup-*.svg/.png` | Monogram + "Kamesh Kamble" + "आपला कामेश", horizontal (letterheads, banners, email signature) |
 | `public/brand/kk-stacked-*.svg/.png` | Stacked version (posters, print) |
@@ -116,7 +116,7 @@ WhatsApp: set `contact.whatsapp` (digits only, with country code, e.g. `9198XXXX
 ## SEO
 
 - Unique titles, descriptions and canonical URLs per page (`lib/seo.ts`).
-- Open Graph and Twitter card metadata, with `public/og-image.png` (1200×630).
+- Open Graph and Twitter card metadata, with `public/og-image.jpg` and `public/og-image-mr.jpg` (1200×630 JPG, under 300 KB). Set `NEXT_PUBLIC_SITE_URL` in Netlify to the live address, because the card image link must be a full, public URL.
 - `sitemap.xml` and `robots.txt` generated at build time from content (unpublished items are excluded).
 - JSON-LD: `Person`, `WebSite`, `Organization` (Vijaya Construction), and `BreadcrumbList` on every inner page. There's deliberately no `LocalBusiness`, address, rating or review markup until verified data exists.
 - Set `NEXT_PUBLIC_SITE_URL` to the real domain before the production build.
