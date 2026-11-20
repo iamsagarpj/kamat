@@ -11,6 +11,10 @@ export type Photo = {
   placeholderLabel?: string;
   width?: number;
   height?: number;
+  /** Responsive sources, e.g. '/a-480.webp 480w, /a-768.webp 768w'. */
+  srcSet?: string;
+  /** CSS object-position for the crop, e.g. 'center 15%'. */
+  position?: string;
 };
 
 export type Business = {

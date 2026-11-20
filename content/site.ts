@@ -31,8 +31,13 @@ export const profile = {
     { institution: 'Maharaja Sayajirao Vidyalaya', note: 'School year 2006' },
   ],
   portrait: {
-    src: undefined as string | undefined, // TODO: '/assets/profile/portrait.webp'
-    alt: 'Portrait of Kamesh Kamble',
+    src: '/assets/profile/kamesh-kamble-portrait-1055.webp' as string | undefined,
+    srcSet:
+      '/assets/profile/kamesh-kamble-portrait-480.webp 480w, /assets/profile/kamesh-kamble-portrait-768.webp 768w, /assets/profile/kamesh-kamble-portrait-1055.webp 1055w',
+    width: 1055,
+    height: 1491,
+    position: 'center 14%',
+    alt: 'Kamesh Kamble in a white cap and rust-brown shirt',
     placeholderLabel: 'Approved portrait goes here',
   },
   aboutPortrait: {

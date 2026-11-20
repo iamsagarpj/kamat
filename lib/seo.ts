@@ -29,6 +29,7 @@ export const personSchema = () => ({
   name: profile.name,
   alternateName: [profile.nameMarathi, profile.shortMarathi],
   url: site.url,
+  ...(profile.portrait.src ? { image: `${site.url}${profile.portrait.src}` } : {}),
   jobTitle: ['Zilla Parishad Member, Satara', 'Owner & CEO, Vijaya Construction'],
   worksFor: { '@id': `${site.url}/ventures/vijaya-construction/#org` },
   homeLocation: { '@type': 'Place', name: profile.base },

@@ -79,9 +79,9 @@ export default function HeroSection() {
         style={{ background: 'radial-gradient(600px circle at var(--mx) var(--my), rgba(192,138,74,0.16), transparent 60%)' }}
       />
 
-      <div className="container-site grid min-h-[100svh] content-center gap-y-6 pb-20 pt-24 sm:gap-y-8 sm:pb-24 sm:pt-28 md:grid-cols-12 md:gap-x-6 lg:gap-x-8 lg:pt-28">
+      <div className="container-site grid min-h-[100svh] content-center gap-y-6 pb-20 pt-24 sm:gap-y-8 sm:pb-24 sm:pt-28 lg:grid-cols-12 lg:gap-x-8 lg:pt-28">
         {/* Intro */}
-        <div className="md:col-span-7 md:col-start-1 md:row-start-1">
+        <div className="order-1 lg:order-none lg:col-span-7 lg:col-start-6 lg:row-start-1">
           <p className="rise eyebrow flex items-center gap-3 text-bronze-light" style={{ animationDelay: '0.1s' }}>
             <span className="rule" aria-hidden />
             Khed, Satara
@@ -96,14 +96,14 @@ export default function HeroSection() {
           id="hero-title"
           aria-label={profile.name}
           style={drift ? { x: nameX } : undefined}
-          className="relative z-10 font-serif text-mega md:col-span-12 md:col-start-1 md:row-start-2 lg:-mt-4"
+          className="relative z-10 order-2 font-serif text-mega lg:order-none lg:col-span-7 lg:col-start-6 lg:row-start-2 lg:-mt-2"
         >
           <Letters word="Kamesh" />
-          <Letters word="Kamble." offset={6} className="italic text-bronze-light md:pl-[12vw]" />
+          <Letters word="Kamble." offset={6} className="italic text-bronze-light pl-[8vw] lg:pl-[4vw]" />
         </motion.h1>
 
         {/* Line + roles + CTAs */}
-        <div className="relative z-10 md:col-span-7 md:col-start-1 md:row-start-3 lg:col-span-6">
+        <div className="relative z-10 order-4 lg:order-none lg:col-span-6 lg:col-start-6 lg:row-start-3">
           <p className="rise flex flex-wrap gap-x-4 gap-y-1 font-serif text-[clamp(1.25rem,1rem+0.9vw,1.75rem)]" style={{ animationDelay: '0.7s' }}>
             {story.heroRoles.map((r, i) => (
               <span key={r} className={`transition-colors duration-700 ${i === active ? 'text-paper' : 'text-paper/30'}`}>
@@ -131,15 +131,17 @@ export default function HeroSection() {
         {/* Portrait */}
         <motion.div
           style={drift ? { y: portraitY, opacity: fade } : undefined}
-          className="settle relative mx-auto mt-8 w-[86%] max-w-[22rem] sm:max-w-sm md:col-span-5 md:col-start-8 md:row-span-3 md:row-start-1 md:mt-0 md:w-full md:max-w-[min(100%,calc((100svh-8rem)*0.8))] md:self-center md:justify-self-end"
+          className="settle relative order-3 mx-auto my-6 w-[84%] max-w-[22rem] sm:max-w-sm md:my-10 md:max-w-[26rem] lg:order-none lg:col-span-5 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:my-0 lg:w-full lg:max-w-[min(100%,calc((100svh-13rem)*0.8))] lg:self-center lg:justify-self-start"
         >
           <div className="relative overflow-hidden rounded-t-[999px]">
-            <PhotoSlot photo={profile.portrait} priority monogram className="aspect-[4/5] w-full" sizes="(min-width: 1024px) 40vw, 90vw" />
+            <PhotoSlot photo={profile.portrait} priority monogram className="aspect-[4/5] w-full" sizes="(min-width: 1024px) 40vw, (min-width: 768px) 26rem, 84vw" />
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
+            <div aria-hidden className="pointer-events-none absolute inset-0 rounded-t-[999px] ring-1 ring-inset ring-bronze-light/25" />
           </div>
-          <div className="absolute -bottom-10 -left-8 hidden h-32 w-32 sm:block md:-left-10 md:h-40 md:w-40">
+          <div className="absolute -bottom-10 -left-6 hidden h-32 w-32 sm:block md:-left-12 md:h-40 md:w-40 lg:-left-10">
             <Badge />
           </div>
-          <div className="absolute -bottom-6 -right-2 w-40 border border-paper/10 bg-ink/90 p-4 backdrop-blur sm:-right-4 sm:w-52 sm:p-5 md:w-44 md:p-4 lg:w-56 lg:p-6">
+          <div className="absolute -bottom-6 -right-3 w-40 border border-paper/10 bg-ink/90 p-4 backdrop-blur sm:-right-4 sm:w-52 sm:p-5 md:w-44 md:p-4 lg:w-56 lg:p-6">
             <p className="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-paper/60">Building Khed since</p>
             <p className="mt-2 font-serif text-4xl text-paper sm:text-5xl md:text-4xl lg:text-6xl"><Odometer value="2023" /></p>
             <p className="mt-3 text-xs leading-relaxed text-paper/60">Founded Vijaya Construction</p>
@@ -147,7 +149,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[0.65rem] uppercase tracking-[0.3em] text-paper/40 md:flex" aria-hidden>
+      <div className="absolute bottom-8 right-8 hidden flex-col items-center gap-3 lg:right-12 text-[0.65rem] uppercase tracking-[0.3em] text-paper/40 md:flex" aria-hidden>
         Scroll
         <span className="relative h-12 w-px overflow-hidden bg-paper/15"><span className="scroll-cue absolute inset-x-0 top-0 h-1/2 bg-bronze-light" /></span>
       </div>

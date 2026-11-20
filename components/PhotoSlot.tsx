@@ -28,6 +28,7 @@ export default function PhotoSlot({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={photo.src}
+          srcSet={photo.srcSet}
           alt={photo.alt}
           width={photo.width}
           height={photo.height}
@@ -35,6 +36,7 @@ export default function PhotoSlot({
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={priority ? 'high' : 'auto'}
           decoding="async"
+          style={photo.position ? { objectPosition: photo.position } : undefined}
           className={`h-full w-full object-cover ${zoom ? 'transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]' : ''}`}
         />
       </div>
